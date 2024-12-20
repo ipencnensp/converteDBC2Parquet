@@ -16,7 +16,7 @@ Estes scripts funcionam da seguinte forma:
 
 3. Antes de chamar o script de conversão, você deve criar o seu arquivo de configuração `config.R`; um exemplo é fornecido, que deve ser renomeado para `config.R` depois de preenchido corretamente com os parâmetros para a conversão.
 
-4. Preferencialmente, chame o script de dentro do diretório onde estão as APACS a serem convertidas, utilize sempre o programa `Rscript` do **R** para rodar o script, da seguinte forma:
+4. Preferencialmente, chame o script de dentro do diretório onde estão os arquivos `*.dbc` a serem convertidos, utilize sempre o programa `Rscript` do **R** para rodar o script, da seguinte forma:
   * `Rscript CAMINHO/PARA/SCRIPTS/conversaoDBCparaParquet.R > logconversao.txt 2>&1 &`
   * nesse comando, estamos redirecionando a saída para um arquivo de log para poder inspecionar se deu tudo certo; também será redirecionada a saída de erro padrão para o mesmo arquivo, e a execução será em segundo plano (background).
   * Pode-se omitir o redirecionamento:  
