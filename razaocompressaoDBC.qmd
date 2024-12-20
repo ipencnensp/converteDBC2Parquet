@@ -1,0 +1,55 @@
+---
+title: "Estimativa do fator de compressão"
+author: "Mário Menezes"
+format: 
+  html:
+    theme: cerulean
+execute:
+  echo: false
+  warning: false
+  error: false
+  message: false
+---
+
+Os arquivos "DBC" são comprimidos, o que significa que, quando lidos em um `data.frame` vão ocupar muito mais memória do que o seu tamanho físico no disco.
+
+Para tentar estimar a razão entre o tamanho físico no disco e o tamanho na memória, 32 arquivos, com tamanhos variando de aproximadamente 3,8 Mb a até 162 Mb foram lidos e os seus tamanhos físicos e na memória (`data.frame`) foram coletados.
+
+Com estes dados, uma estimativa do fator de compressão, baseada em uma regressão linear simples, será utilizada para definir os limites de memória nos scripts de conversão de "DBC" para Parquet.
+
+```{r}
+library(read.dbc)
+library(tidyverse)
+library(ggthemes)
+library(here)
+```
+
+
+```{r}
+library(here)
+df <- readRDS(file.path(here(),"dadosMemoriaArquivos.RDS"))
+```
+
+O gráfico abaixo mostra o relacionamento entre o tamanho do arquivo físico em disco e o tamanho do objeto (`data.frame`) na memória.
+
+```{r}
+ggplot(df) + geom_point(aes(x=x/(2**20),y=y/(2**20))) + 
+  labs(x ="Tamanho Arquivos (Mb)", y = "Tam. Objeto Memoria (Mb)") +
+  theme_clean()
+```
+
+Utilizando estes dados, um modelo de Regressão Linear foi criado.
+
+```{r}
+fit <- lm(y ~ x, data = df)
+summary(fit)
+```
+
+
+Obtemos então o seguinte intervalo de confiança para os parâmetros do modelo.
+
+```{r}
+confint(fit)
+```
+
+Vou então utilizar esse valor `r confint(fit)[4]` como estimativa da razão de compressão.
