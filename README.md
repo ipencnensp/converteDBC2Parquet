@@ -1,4 +1,4 @@
-# Conversão de arquivos DBC do DATASUS para Parquet.
+# Conversão de arquivos DBC do DATASUS para Parquet e CSV.
 
 Estes scripts funcionam da seguinte forma:
 
@@ -22,6 +22,8 @@ Estes scripts funcionam da seguinte forma:
   * Pode-se omitir o redirecionamento:  
   `Rscript CAMINHO/PARA/SCRIPTS/conversaoDBCparaParquet.R`
   * nesse caso, toda a saída será mostrada no próprio console/terminal da execução.
+  
+5. Um último script foi adicionado para permitir converter os arquivos `*.dbc` em `CSV`. O seu funcionamento é o mesmo do script de conversão para Parquet.
   
 ### Bibliotecas necessárias
 
